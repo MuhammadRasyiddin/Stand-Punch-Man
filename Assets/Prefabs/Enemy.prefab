@@ -403,7 +403,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 22
+  m_SortingOrder: 27
   m_Sprite: {fileID: 3219115276162550809, guid: eb86aad4d7efb01418689ec6d04c06e7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -486,7 +486,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 24
+  m_SortingOrder: 28
   m_Sprite: {fileID: 4834830498472108953, guid: eb86aad4d7efb01418689ec6d04c06e7,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -836,6 +836,7 @@ GameObject:
   - component: {fileID: 7964197398128694062}
   - component: {fileID: 929108495210711186}
   - component: {fileID: 2415683397660815660}
+  - component: {fileID: 1447157551134042793}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -872,6 +873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiply: 0
+  enemyAnim: {fileID: 1447157551134042793}
 --- !u!61 &929108495210711186
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -919,6 +921,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 6
+--- !u!95 &1447157551134042793
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964197398128694056}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4016bf518d2580e4bab29d31dd37f10c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8772126735905903836
 GameObject:
   m_ObjectHideFlags: 0

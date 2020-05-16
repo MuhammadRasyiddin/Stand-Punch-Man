@@ -4,38 +4,63 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [HideInInspector]
-    public int multiply;
+    [HideInInspector] public int multiply;
+    public Animator enemyAnim;
+    private bool attacking;
+    private bool isHit;
 
     private void Update()
     {
-        Movement();
-        Hit();
-        Attack();
+        if (GameObject.Find(GameData.gameObject_gameController).GetComponent<GameController>().gameStart)
+        {
+            Movement();
+            Hit();
+            Attack();
+            OutOfArea();
+        }
     }
 
     private void Movement()
     {
-        this.gameObject.transform.Translate(new Vector2(5 * multiply,0) * Time.deltaTime);
+        if (!isHit)
+        {
+            this.gameObject.transform.Translate(new Vector2(5 * multiply, 0) * Time.deltaTime);
+        }
+        else
+        {
+            this.gameObject.transform.Translate(new Vector2(15 * multiply, 3) * Time.deltaTime);
+        }
     }
 
     private void Hit() //hit by player
     {
-        if (this.gameObject.transform.localPosition.x >= -4f && this.gameObject.transform.localPosition.x <= -2f)
+        if (this.gameObject.transform.localRotation.y == 0)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (this.gameObject.transform.localPosition.x >= -4f && this.gameObject.transform.localPosition.x <= -2f)
             {
-                print("HIT LEFT");
-                Destroy(this.gameObject);
+                KnockBack(KeyCode.A);
             }
         }
 
-        if (this.gameObject.transform.localPosition.x >= 2f && this.gameObject.transform.localPosition.x <= 4f)
+
+        if (this.gameObject.transform.localRotation.y == 180)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (this.gameObject.transform.localPosition.x >= 2f && this.gameObject.transform.localPosition.x <= 4f)
             {
-                print("HIT RIGHT");
-                Destroy(this.gameObject);
+                KnockBack(KeyCode.D);
+            }
+        }
+    }
+
+    private void KnockBack(KeyCode keyCode)
+    {
+        if (!isHit)
+        {
+            if (Input.GetKeyDown(keyCode))
+            {
+                isHit = true;
+                multiply = multiply * -1;
+                enemyAnim.Play(GameData.animState_hit, 0);
             }
         }
     }
@@ -44,15 +69,29 @@ public class EnemyController : MonoBehaviour
     {
         if (this.gameObject.transform.localPosition.x > -2f && this.gameObject.transform.localPosition.x < 0f)
         {
-            print("ATTACK LEFT");
-            GameObject.Find(GameData.gameObject_gameController).GetComponent<PlayerController>().health--;
-            Destroy(this.gameObject);
+            GiveDamage();
         }
 
         if (this.gameObject.transform.localPosition.x < 2 && this.gameObject.transform.localPosition.x > 0f)
         {
-            print("ATTACK RIGHT");
+            GiveDamage();
+        }
+    }
+
+    private void GiveDamage()
+    {
+        if (!attacking)
+        {
+            attacking = true;
+            enemyAnim.Play(GameData.animState_attack, 0);
             GameObject.Find(GameData.gameObject_gameController).GetComponent<PlayerController>().health--;
+        }
+    }
+
+    private void OutOfArea()
+    {
+        if (this.gameObject.transform.localPosition.x < -10f || this.gameObject.transform.localPosition.x > 10)
+        {
             Destroy(this.gameObject);
         }
     }
